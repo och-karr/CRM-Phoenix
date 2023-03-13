@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
@@ -39,7 +39,7 @@ export class RegisterComponent {
     termsAccepted: new FormControl(false, [Validators.requiredTrue]),
   });
 
-  constructor(private _userService: UserService, private _router: Router) {}
+  constructor(private _userService: UserService, private _router: Router, private cd: ChangeDetectorRef) {}
 
   onFormSubmitted(form: FormGroup): void {
     if (form.valid) {
@@ -52,8 +52,11 @@ export class RegisterComponent {
         next: () => {
           // this._router.navigate(['/'])
         },
-        error: () => {
-          // this._router.navigate(['/error'])
+        error: (err) => {
+          this.form.setErrors({
+            beValidation: err.error.message
+          })
+          this.cd.markForCheck()
         }
       })
     }
