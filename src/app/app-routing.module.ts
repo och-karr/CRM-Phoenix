@@ -6,6 +6,9 @@ import {AuthComponent} from "./components/auth/auth.component";
 import {AuthComponentModule} from "./components/auth/auth.component-module";
 import {RegisterComponent} from "./components/register/register.component";
 import {RegisterComponentModule} from "./components/register/register.component-module";
+import {VerifyComponent} from "./components/verify/verify.component";
+import {VerifyComponentModule} from "./components/verify/verify.component-module";
+import {VerifyGuard} from "./guards/verify/verify.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -16,6 +19,8 @@ import {RegisterComponentModule} from "./components/register/register.component-
         {
           path: 'login',
           component: LoginComponent,
+          canActivate: [VerifyGuard],
+          data: {redirectUrl: '/verify'},
           loadChildren: () => LoginComponentModule
         },
         {
@@ -24,8 +29,12 @@ import {RegisterComponentModule} from "./components/register/register.component-
           loadChildren: () => RegisterComponentModule
         }
       ]
+    },
+    {
+      path: 'verify',
+      component: VerifyComponent
     }
-  ]), AuthComponentModule],
+  ]), AuthComponentModule, VerifyComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
