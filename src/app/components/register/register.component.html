@@ -50,8 +50,8 @@
                     <label class="form-label">Password</label>
                     <input formControlName="password" class="form-control form-icon-input" type="password" placeholder="Password" required/>
                     <div class="auth-form-error">
-                      <div class="text-danger fs-sm--2" *ngIf="passwords.get('password')!.invalid && (passwords.get('password')!.touched || passwords.get('password')!.dirty)">
-                        Password is invalid
+                      <div class="text-danger fs-sm--2" *ngIf="passwords.hasError('isPasswordValid') && (passwords.get('password')!.touched || passwords.get('password')!.dirty)">
+                        {{ passwords.getError('isPasswordValid') }}
                       </div>
                     </div>
                   </div>
