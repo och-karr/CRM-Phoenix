@@ -3,14 +3,15 @@ import { LoginComponent } from './login.component';
 import {RouterLink, RouterModule} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
-  imports: [
-    RouterLink,
-    RouterModule,
-    CommonModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        RouterLink,
+        RouterModule,
+        CommonModule,
+        ReactiveFormsModule
+    ],
   declarations: [LoginComponent],
   providers: [],
   exports: [LoginComponent]
