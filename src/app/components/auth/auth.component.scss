@@ -1,3 +1,42 @@
 .bg-holder.bg-auth-card-overlay {
   background-image: url(/assets/img/bg/37.png);
 }
+
+.auth-card--container {
+  a {
+    text-decoration: none;
+  }
+
+  .auth-form-error {
+    height: 20px;
+  }
+
+  .bg-holder {
+    background-image:url(/assets/img/bg/38.png);
+  }
+
+  .auth-card--logo {
+    width: 48px;
+  }
+
+  .auth-title-box {
+    .h3, h3 {
+      font-size: calc(1.3rem + .6vw);
+      font-weight: 800;
+    }
+
+    @media (min-width: 1200px) {
+      .h3, h3 {
+        font-size: 1.75rem;
+      }
+    }
+
+    .fa-angle-right {
+      top: 2px;
+    }
+  }
+}
+
+.form-icon {
+  width: 20px;
+}
