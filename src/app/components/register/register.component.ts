@@ -35,7 +35,7 @@ export class RegisterComponent {
         }
       }).subscribe({
         next: () => {
-          // this._router.navigate(['/'])
+          this._router.navigate(['/auth/login'])
         },
         error: (err) => {
           this.form.setErrors({
