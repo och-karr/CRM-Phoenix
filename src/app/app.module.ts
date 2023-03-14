@@ -4,8 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UserService} from "./services/user.service";
+import {VerifyGuard} from "./guards/verify/verify.guard";
+import {STORAGE} from "./services/storage";
+import {AccessTokenService} from "./services/context/access-token.service";
+import {AuthInterceptor} from "./auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -18,7 +22,11 @@ import {UserService} from "./services/user.service";
     HttpClientModule
   ],
   providers: [
-    UserService
+    { provide: STORAGE, useValue: localStorage },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    UserService,
+    VerifyGuard,
+    AccessTokenService
   ],
   bootstrap: [AppComponent]
 })
