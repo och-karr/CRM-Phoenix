@@ -14,8 +14,12 @@ export class HasBioGuard implements CanActivate {
         return !data ?
           true : this._router.parseUrl(activatedRoute.data['hasBioUrl'])
       }),
-      catchError(() => {
-        return of(true);
+      catchError((err) => {
+        if (err.status === 404) {
+          return of(true);
+        } else {
+          return of(this._router.parseUrl(activatedRoute.data['hasBioUrl']))
+        }
       })
     )
   }
