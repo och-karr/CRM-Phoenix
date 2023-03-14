@@ -40,8 +40,15 @@
                       <h2 class="text-1000 font-nunito fw-bold"><span class="fw-normal">Hello </span>John Smith</h2>
                       <p class="text-700 font-nunito">Write down something about yourself</p>
                     </div>
-                    <textarea class="form-control mb-3 font-nunito" placeholder="Write bio here..." rows="8"></textarea>
-                    <button class="btn btn-primary w-100 font-nunito" [routerLink]="'/'">Send</button>
+                    <form [formGroup]="form" (ngSubmit)="onFormSubmitted(form)">
+                      <textarea formControlName="bio" class="form-control font-nunito" placeholder="Write bio here..." rows="8"></textarea>
+                      <div class="auth-form-error mb-3">
+                        <div class="text-danger fs-sm--2" *ngIf="form.get('bio')!.invalid && (form.get('bio')!.touched || form.get('bio')!.dirty)">
+                          Bio should contain at least 10 words and 2 sentences
+                        </div>
+                      </div>
+                      <button class="btn btn-primary w-100 font-nunito" [disabled]="!form.valid" type="submit">Send</button>
+                    </form>
                   </div>
                 </div>
               </div>

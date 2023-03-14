@@ -11,6 +11,7 @@ export class UserService {
   login(data: any): Observable<any> {
     return this._httpClient.post<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/login', data).pipe(
       tap(val => {
+        console.log(val)
         this._accessTokenService.set(val.data.accessToken);
       })
     );
@@ -21,12 +22,20 @@ export class UserService {
   }
 
   verify(): Observable<any> {
-    return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/me');
+    return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/me').pipe(
+      tap(val => {
+        console.log(val)
+      })
+    );
   }
 
   getBio(): Observable<any> {
     return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/my-bio').pipe(
       tap(data => console.log(data))
     );
+  }
+
+  addBio(data: any): Observable<void> {
+    return this._httpClient.post<void>('https://us-central1-courses-auth.cloudfunctions.net/auth/add-bio', data);
   }
 }

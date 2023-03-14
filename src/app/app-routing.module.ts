@@ -8,7 +8,6 @@ import {RegisterComponent} from "./components/register/register.component";
 import {RegisterComponentModule} from "./components/register/register.component-module";
 import {VerifyComponent} from "./components/verify/verify.component";
 import {VerifyComponentModule} from "./components/verify/verify.component-module";
-import {VerifyGuard} from "./guards/verify/verify.guard";
 import {CompleteProfileComponent} from "./components/add-bio/complete-profile.component";
 import {CompleteProfileComponentModule} from "./components/add-bio/complete-profile.component-module";
 import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
@@ -36,7 +35,7 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
     {
       path: 'complete-profile',
       component: CompleteProfileComponent,
-      canActivate: [VerifyGuard, HasBioGuard],
+      canActivate: [ HasBioGuard],
       data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login', hasBioUrl: '/auth/register'},
     },
     {
