@@ -10,6 +10,7 @@ import {VerifyGuard} from "./guards/verify/verify.guard";
 import {STORAGE} from "./services/storage";
 import {AccessTokenService} from "./services/context/access-token.service";
 import {AuthInterceptor} from "./auth.interceptor";
+import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {AuthInterceptor} from "./auth.interceptor";
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     UserService,
     VerifyGuard,
+    HasBioGuard,
     AccessTokenService
   ],
   bootstrap: [AppComponent]

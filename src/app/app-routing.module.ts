@@ -11,6 +11,7 @@ import {VerifyComponentModule} from "./components/verify/verify.component-module
 import {VerifyGuard} from "./guards/verify/verify.guard";
 import {CompleteProfileComponent} from "./components/add-bio/complete-profile.component";
 import {CompleteProfileComponentModule} from "./components/add-bio/complete-profile.component-module";
+import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -35,8 +36,8 @@ import {CompleteProfileComponentModule} from "./components/add-bio/complete-prof
     {
       path: 'complete-profile',
       component: CompleteProfileComponent,
-      canActivate: [VerifyGuard],
-      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login'},
+      canActivate: [VerifyGuard, HasBioGuard],
+      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login', hasBioUrl: '/auth/register'},
     },
     {
       path: 'verify',
