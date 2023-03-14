@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-complete-profile',
   templateUrl: './complete-profile.component.html',
+  styleUrls: ['./complete-profile.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
