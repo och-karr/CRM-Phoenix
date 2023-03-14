@@ -8,7 +8,9 @@ import {RegisterComponent} from "./components/register/register.component";
 import {RegisterComponentModule} from "./components/register/register.component-module";
 import {VerifyComponent} from "./components/verify/verify.component";
 import {VerifyComponentModule} from "./components/verify/verify.component-module";
-import {VerifyGuard} from "./guards/verify/verify.guard";
+import {CompleteProfileComponent} from "./components/add-bio/complete-profile.component";
+import {CompleteProfileComponentModule} from "./components/add-bio/complete-profile.component-module";
+import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -19,7 +21,7 @@ import {VerifyGuard} from "./guards/verify/verify.guard";
         {
           path: 'login',
           component: LoginComponent,
-          canActivate: [VerifyGuard],
+          // canActivate: [VerifyGuard],
           data: {redirectUrl: '/verify', isLogin: true},
           loadChildren: () => LoginComponentModule
         },
@@ -31,10 +33,16 @@ import {VerifyGuard} from "./guards/verify/verify.guard";
       ]
     },
     {
+      path: 'complete-profile',
+      component: CompleteProfileComponent,
+      canActivate: [ HasBioGuard],
+      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login', hasBioUrl: '/auth/register'},
+    },
+    {
       path: 'verify',
       component: VerifyComponent
     }
-  ]), AuthComponentModule, VerifyComponentModule],
+  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
