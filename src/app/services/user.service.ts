@@ -23,4 +23,10 @@ export class UserService {
   verify(): Observable<any> {
     return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/me');
   }
+
+  getBio(): Observable<any> {
+    return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/my-bio').pipe(
+      tap(data => console.log(data))
+    );
+  }
 }
