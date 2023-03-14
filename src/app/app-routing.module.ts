@@ -20,7 +20,7 @@ import {VerifyGuard} from "./guards/verify/verify.guard";
           path: 'login',
           component: LoginComponent,
           canActivate: [VerifyGuard],
-          data: {redirectUrl: '/verify'},
+          data: {redirectUrl: '/verify', isLogin: true},
           loadChildren: () => LoginComponentModule
         },
         {
