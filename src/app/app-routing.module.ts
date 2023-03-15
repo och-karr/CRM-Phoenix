@@ -14,6 +14,8 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 import {LeadsTableComponentModule} from "./components/leads-table/leads-table.component-module";
 import {LeadsTableComponent} from "./components/leads-table/leads-table.component";
 import {VerifyGuard} from "./guards/verify/verify.guard";
+import {LogoutComponent} from "./components/logout/logout.component";
+import {LogoutComponentModule} from "./components/logout/logout.component-module";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -50,8 +52,12 @@ import {VerifyGuard} from "./guards/verify/verify.guard";
     {
       path: 'verify',
       component: VerifyComponent
+    },
+    {
+      path: 'logout',
+      component: LogoutComponent
     }
-  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule],
+  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule, LogoutComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

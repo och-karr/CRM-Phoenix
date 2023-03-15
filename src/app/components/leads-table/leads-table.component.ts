@@ -14,6 +14,6 @@ export class LeadsTableComponent {
 
   logoutUser() {
     this._userService.logout();
-    this._router.navigate(['/auth/login']);
+    this._router.navigate(['/logout']);
   }
 }
