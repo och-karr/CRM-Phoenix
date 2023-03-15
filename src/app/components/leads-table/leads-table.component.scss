@@ -40,6 +40,24 @@
   }
 }
 
+.dropdown-profile {
+  min-width: 250px;
+
+  .dropdown-profile-name {
+    font-size: .8rem;
+  }
+
+  .card-footer {
+    background-color: white;
+  }
+
+  .btn-phoenix-secondary {
+    background-color: var(--phoenix-body-bg);
+    border-color: var(--bs-border-color);
+
+  }
+}
+
 a {
   text-decoration: none;
 }
