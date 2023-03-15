@@ -13,6 +13,7 @@ import {CompleteProfileComponentModule} from "./components/add-bio/complete-prof
 import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 import {LeadsTableComponentModule} from "./components/leads-table/leads-table.component-module";
 import {LeadsTableComponent} from "./components/leads-table/leads-table.component";
+import {VerifyGuard} from "./guards/verify/verify.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -24,7 +25,7 @@ import {LeadsTableComponent} from "./components/leads-table/leads-table.componen
           path: 'login',
           component: LoginComponent,
           // canActivate: [VerifyGuard],
-          data: {redirectUrl: '/verify', isLogin: true},
+          // data: {redirectUrl: '/verify', isLogin: true},
           loadChildren: () => LoginComponentModule
         },
         {
@@ -38,11 +39,13 @@ import {LeadsTableComponent} from "./components/leads-table/leads-table.componen
       path: 'complete-profile',
       component: CompleteProfileComponent,
       canActivate: [ HasBioGuard],
-      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login', hasBioUrl: '/auth/register'},
+      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login', hasBioUrl: '/auth/register'},
     },
     {
       path: 'leads',
-      component: LeadsTableComponent
+      component: LeadsTableComponent,
+      canActivate: [VerifyGuard],
+      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
     },
     {
       path: 'verify',

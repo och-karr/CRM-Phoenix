@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {map, Observable, of, switchMap} from 'rxjs';
+import {catchError, map, Observable, of, switchMap} from 'rxjs';
 import {UserService} from "../../services/user.service";
 import {AccessTokenService} from "../../services/context/access-token.service";
 
@@ -18,6 +18,9 @@ export class VerifyGuard implements CanActivate {
             map(data => {
               return data.data.user.context.email_verified ?
                 true : this._router.parseUrl(activatedRoute.data['redirectUrl'])
+            }),
+            catchError(() => {
+              return of(this._router.parseUrl(activatedRoute.data['loginUrl']))
             })
           )
         } else {
