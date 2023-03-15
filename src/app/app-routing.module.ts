@@ -11,6 +11,8 @@ import {VerifyComponentModule} from "./components/verify/verify.component-module
 import {CompleteProfileComponent} from "./components/add-bio/complete-profile.component";
 import {CompleteProfileComponentModule} from "./components/add-bio/complete-profile.component-module";
 import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
+import {LeadsTableComponentModule} from "./components/leads-table/leads-table.component-module";
+import {LeadsTableComponent} from "./components/leads-table/leads-table.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -39,10 +41,14 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
       data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login', hasBioUrl: '/auth/register'},
     },
     {
+      path: 'leads',
+      component: LeadsTableComponent
+    },
+    {
       path: 'verify',
       component: VerifyComponent
     }
-  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule],
+  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
