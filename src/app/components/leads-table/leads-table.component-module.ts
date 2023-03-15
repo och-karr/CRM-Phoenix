@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { LeadsTableComponent } from './leads-table.component';
+import {RouterLink, RouterModule} from "@angular/router";
 
 @NgModule({
-  imports: [],
+  imports: [
+    RouterLink,
+    RouterModule,
+  ],
   declarations: [LeadsTableComponent],
   providers: [],
   exports: [LeadsTableComponent]
