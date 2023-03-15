@@ -11,6 +11,11 @@ import {VerifyComponentModule} from "./components/verify/verify.component-module
 import {CompleteProfileComponent} from "./components/add-bio/complete-profile.component";
 import {CompleteProfileComponentModule} from "./components/add-bio/complete-profile.component-module";
 import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
+import {LeadsTableComponentModule} from "./components/leads-table/leads-table.component-module";
+import {LeadsTableComponent} from "./components/leads-table/leads-table.component";
+import {VerifyGuard} from "./guards/verify/verify.guard";
+import {LogoutComponent} from "./components/logout/logout.component";
+import {LogoutComponentModule} from "./components/logout/logout.component-module";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -22,7 +27,7 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
           path: 'login',
           component: LoginComponent,
           // canActivate: [VerifyGuard],
-          data: {redirectUrl: '/verify', isLogin: true},
+          // data: {redirectUrl: '/verify', isLogin: true},
           loadChildren: () => LoginComponentModule
         },
         {
@@ -36,13 +41,23 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
       path: 'complete-profile',
       component: CompleteProfileComponent,
       canActivate: [ HasBioGuard],
-      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/login', hasBioUrl: '/auth/register'},
+      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login', hasBioUrl: '/auth/register'},
+    },
+    {
+      path: 'leads',
+      component: LeadsTableComponent,
+      canActivate: [VerifyGuard],
+      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
     },
     {
       path: 'verify',
       component: VerifyComponent
+    },
+    {
+      path: 'logout',
+      component: LogoutComponent
     }
-  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule],
+  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule, LogoutComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
