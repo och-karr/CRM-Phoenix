@@ -27,7 +27,7 @@ export class LoginComponent {
     })
       .subscribe({
         next: () => {
-          // this._router.navigate(['/leads'])
+          this._router.navigate(['/leads'])
         },
         error: (err) => {
           this.form.setErrors({

@@ -35,7 +35,16 @@ export class RegisterComponent {
         }
       }).subscribe({
         next: () => {
-          this._router.navigate(['/auth/login'])
+          this._userService.login({
+            data: {
+              email: form.get('email')?.value,
+              password: form.get('passwords')?.get('password')?.value
+            }
+          }).subscribe({
+            next: () => {
+              this._router.navigate(['/leads'])
+            }
+          })
         },
         error: (err) => {
           this.form.setErrors({
