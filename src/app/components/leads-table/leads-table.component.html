@@ -14,7 +14,7 @@
           <a class="navbar-brand me-1 me-sm-3" [routerLink]="'/'">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center">
-                <img src="assets/img/icons/logo.png" alt="phoenix" width="27" />
+                <img class="navbar-logo" src="assets/img/icons/logo.png" alt="phoenix" />
                 <p class="logo-text ms-2 d-none d-sm-block">phoenix</p>
               </div>
             </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-footer p-0 border-top">
                   <div class="px-3 mt-3">
-                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100">
+                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100" (click)="logoutUser()">
 <!--                      <i class="far fa-sign-out me-2"></i>-->
                       <i class="fas fa-sign-out-alt me-2"></i>
                       Sign out

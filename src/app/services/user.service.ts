@@ -21,6 +21,10 @@ export class UserService {
     return this._httpClient.post<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/register', data);
   }
 
+  logout(): void {
+    this._accessTokenService.remove();
+  }
+
   verify(): Observable<any> {
     return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/me').pipe(
       tap(val => {
