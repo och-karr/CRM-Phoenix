@@ -11,6 +11,7 @@ import {STORAGE} from "./services/storage";
 import {AccessTokenService} from "./services/context/access-token.service";
 import {AuthInterceptor} from "./auth.interceptor";
 import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
+import {LeadsService} from "./services/leads.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
     UserService,
     VerifyGuard,
     HasBioGuard,
-    AccessTokenService
+    AccessTokenService,
+    LeadsService
   ],
   bootstrap: [AppComponent]
 })
