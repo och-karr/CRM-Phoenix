@@ -4,8 +4,8 @@
 <!--    navbar-->
     <nav class="navbar navbar-top navbar-expand" id="navbarDefault">
       <div class="collapse navbar-collapse justify-content-between">
-        <div class="navbar-logo">
 
+        <div class="navbar-logo">
           <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"
                   data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse"
                   aria-expanded="false" aria-label="Toggle Navigation">
@@ -20,6 +20,7 @@
             </div>
           </a>
         </div>
+
         <ul class="navbar-nav navbar-nav-icons flex-row">
 
 <!--          dropdown-->
@@ -58,14 +59,18 @@
               </div>
             </div>
           </li>
+
         </ul>
+
       </div>
     </nav>
 
 <!--    leads container-->
     <div class="content leads-container">
       <div class="pb-9">
-        <h2 class="mb-4 leads-title fw-bolder font-nunito">2 Companies</h2>
+        <ng-container *ngIf="leadsWithActivities$ | async as leads">
+          <h2 class="mb-4 leads-title fw-bolder font-nunito">{{ leads.length }} Companies</h2>
+        </ng-container>
         <div id="dealsTable" class="leads-table-container"
              data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
           <div class="row g-3 justify-content-between mb-4">
@@ -202,27 +207,27 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody class="list" id="deal-tables-body" *ngIf="leads$ | async as leads">
-                  <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leads.data; index as i">
+                <tbody class="list" id="deal-tables-body" *ngIf="leadsWithActivities$ | async as leads">
+                  <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leads; index as i">
                     <td class="name align-middle white-space-nowrap">
                       <div class="d-flex align-items-center">
                         <div>
-                          <a class="fs-0 fw-bold" [href]="lead.websiteLink" >{{ lead.name }}</a>
+                          <a class="fs-0 fw-bold" [href]="lead.name.websiteLink" >{{ lead.name.companyName }}</a>
                           <div class="d-flex align-items-center justify-content-around">
-                            <a [href]="lead.linkedinLink"><i class="fab fa-linkedin-in"></i></a>
-                            <a [href]="lead.websiteLink"><i class="fas fa-link"></i></a>
+                            <a [href]="lead.name.linkedinLink"><i class="fab fa-linkedin-in"></i></a>
+                            <a [href]="lead.name.websiteLink"><i class="fas fa-link"></i></a>
                           </div>
                         </div>
                       </div>
                     </td>
                     <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
-                      <div><span class="badge badge-phoenix badge-phoenix-warning">Internal Projects</span></div>
-                      <div><span class="badge badge-phoenix badge-phoenix-warning">External Projects</span></div>
-                      <div><span class="badge badge-phoenix badge-phoenix-warning">Recruitment Agency </span></div>
+                      <ng-container *ngFor="let activity of lead.scope">
+                        <div><span class="badge badge-phoenix badge-phoenix-warning">{{ activity }}</span></div>
+                      </ng-container>
                     </td>
                     <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
-                      <div>Is hiring: <i class="fas" [ngClass]="lead.hiring.active ? 'fa-check' : 'fa-times'"></i></div>
-                      <div>Juniors: <i class="fas" [ngClass]="lead.hiring.junior ? 'fa-check' : 'fa-times'"></i></div>
+                      <div>Is hiring: <i class="fas" [ngClass]="lead.hiring.isHiring ? 'fa-check' : 'fa-times'"></i></div>
+                      <div>Juniors: <i class="fas" [ngClass]="lead.hiring.juniors ? 'fa-check' : 'fa-times'"></i></div>
                       <div>Talent Program : <i class="fas" [ngClass]="lead.hiring.talentProgram ? 'fa-check' : 'fa-times'"></i></div>
                     </td>
                     <td class="company align-middle white-space-nowrap text-600 ps-4 border-end fw-semi-bold text-1000">
@@ -232,16 +237,17 @@
                       {{ lead.location }}
                     </td>
                     <td class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end">
-                      <div>Total: {{ lead.companySize.total }}</div>
-                      <div>Dev: {{ lead.companySize.dev }}</div>
-                      <div>FE: {{ lead.companySize.fe }}</div>
+                      <div>Total: {{ lead.size.total }}</div>
+                      <div>Dev: {{ lead.size.dev }}</div>
+                      <div>FE: {{ lead.size.fe }}</div>
                     </td>
                     <td class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end">
-                      <div>Total: {{ lead.annualRevenue }}</div>
+                      <div>Total: {{ lead.revenue.total }}</div>
                       <div>PE: 1</div>
                     </td>
-                    <td class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end"><span
-                      class="badge badge-phoenix badge-phoenix-primary">Investigation</span></td>
+                    <td class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end">
+                      <span class="badge badge-phoenix badge-phoenix-primary">Investigation</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>

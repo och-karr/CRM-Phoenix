@@ -11,4 +11,10 @@ export class LeadsService {
       tap(data => console.log(data))
     );
   }
+
+  getActivities(): Observable<any> {
+    return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/leads/activities').pipe(
+      tap(data => console.log(data))
+    );
+  }
 }
