@@ -88,15 +88,18 @@
 <!--              filter modal-->
             <div class="col-auto">
               <div class="d-flex">
+
                 <button class="btn px-3 btn-phoenix-secondary" type="button" data-bs-toggle="modal"
                         data-bs-target="#filterModal" data-boundary="window" aria-haspopup="true" aria-expanded="false"
                         data-bs-reference="parent">
-                  <span class="fa-solid fa-filter text-primary" data-fa-transform="down-3"></span>
+                  <i class="fas fa-filter text-primary" data-fa-transform="down-3"></i>
                 </button>
+
                 <div class="modal fade" id="filterModal" tabindex="-1">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border">
-                      <form id="addEventForm" autocomplete="off">
+
+                      <form [formGroup]="form" (ngSubmit)="onFormSubmitted(form)" id="addEventForm" autocomplete="off">
                         <div class="modal-header border-200 p-4">
                           <h5 class="modal-title text-1000 fs-2 lh-sm">Filter</h5>
                           <button class="btn p-1 text-900" type="button" data-bs-dismiss="modal"
@@ -105,59 +108,45 @@
                           </button>
                         </div>
                         <div class="modal-body pt-4 pb-2 px-4">
+<!--                          <div class="mb-3">-->
+<!--                            <label class="fw-bold mb-2 text-1000" for="leadStatus">Sales Stage</label>-->
+<!--                            <select class="form-select" id="leadStatus">-->
+<!--                              <option value="newLead" selected="selected">Preliminaries</option>-->
+<!--                              <option value="coldLead">Investigation</option>-->
+<!--                              <option value="canceled">Demonstrating Capabilities</option>-->
+<!--                              <option value="wonLead">Obtaining Commitment</option>-->
+<!--                              <option value="wonLead">No Match</option>-->
+<!--                            </select>-->
+<!--                          </div>-->
                           <div class="mb-3">
-                            <label class="fw-bold mb-2 text-1000" for="leadStatus">Sales Stage</label>
-                            <select class="form-select" id="leadStatus">
-                              <option value="newLead" selected="selected">Preliminaries</option>
-                              <option value="coldLead">Investigation</option>
-                              <option value="canceled">Demonstrating Capabilities</option>
-                              <option value="wonLead">Obtaining Commitment</option>
-                              <option value="wonLead">No Match</option>
-                            </select>
+                            <label class="fw-bold mb-2 text-1000">Scope</label>
+                            <input class="form-control" type="hidden" formControlName="scopes">
+                            <ng-container *ngIf="activities$ | async as activities">
+                              <div *ngFor="let item of activities.data" class="form-check">
+                                <input class="form-check-input" [id]="item.id" type="checkbox" [value]="item.name" (change)="onActivityChange($event, item.name)" [checked]="doesIncludeItem(item.name)"/>
+                                <label class="form-check-label" [for]="item.id">{{ item.name }}</label>
+                              </div>
+                            </ng-container>
                           </div>
                           <div class="mb-3">
-                            <label class="fw-bold mb-2 text-1000" for="createDate">Scope</label>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="" />
-                              <label class="form-check-label" for="flexCheckDefault">Internal Project</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value=""
-                                     checked="" />
-                              <label class="form-check-label" for="flexCheckChecked">External Project</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value=""
-                                     checked="" />
-                              <label class="form-check-label" for="flexCheckChecked">Recruitment Agency</label>
-                            </div>
-                          </div>
-                          <div class="mb-3">
-                            <label class="fw-bold mb-2 text-1000" for="createDate">Size</label>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="" />
-                              <label class="form-check-label" for="flexCheckDefault">0-50</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value=""
-                                     checked="" />
-                              <label class="form-check-label" for="flexCheckChecked">51-100</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value=""
-                                     checked="" />
-                              <label class="form-check-label" for="flexCheckChecked">101-500</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value=""
-                                     checked="" />
-                              <label class="form-check-label" for="flexCheckChecked">501-1000</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value=""
-                                     checked="" />
-                              <label class="form-check-label" for="flexCheckChecked">1001+</label>
-                            </div>
+                            <label class="fw-bold mb-2 text-1000">Size</label>
+                            <input class="form-control" type="hidden" formControlName="sizes">
+<!--                            <div *ngFor="let item of sizes" class="form-check">-->
+<!--                              <input [id]="'size'+item.sizeFloor" class="form-check-input" type="checkbox" [value]="item.sizeFloor" (change)="onSizeChange($event, item.sizeFloor)" [checked]="doesIncludeItem(item.sizeFloor)">-->
+<!--                              <label [for]="'size'+item.sizeFloor" class="form-check-label">{{item.label}}</label>-->
+<!--                            </div>-->
+                            <!--                              <div class="form-check" *ngFor="let size of sizes">-->
+                            <!--                                <input class="form-check-input" [formControlName]="'size'+size.sizeFloor" [id]="'size'+size.sizeFloor" type="checkbox" value="" />-->
+                            <!--                                <label class="form-check-label" [for]="'size'+size.sizeFloor">{{ size.label }}</label>-->
+                            <!--                              </div>-->
+                            <!--                              <div class="form-check">-->
+                            <!--                                <input class="form-check-input" formControlName="size0" id="size0" type="checkbox" value="0" />-->
+                            <!--                                <label class="form-check-label" for="size0">0-50</label>-->
+                            <!--                              </div>-->
+                            <!--                              <div class="form-check">-->
+                            <!--                                <input class="form-check-input" formControlName="size51" id="size51" type="checkbox" value="51" />-->
+                            <!--                                <label class="form-check-label" for="size51">51-100</label>-->
+                            <!--                              </div>-->
                           </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 border-0 pt-3">
@@ -207,7 +196,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody class="list" id="deal-tables-body" *ngIf="leadsWithActivities$ | async as leads">
+                <tbody class="list" id="deal-tables-body" *ngIf="filteredLeadsWithActivities$ | async as leads">
                   <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leads; index as i">
                     <td class="name align-middle white-space-nowrap">
                       <div class="d-flex align-items-center">
