@@ -68,7 +68,7 @@
 <!--    leads container-->
     <div class="content leads-container">
       <div class="pb-9">
-        <ng-container *ngIf="leadsWithActivities$ | async as leads">
+        <ng-container *ngIf="filteredLeadsWithActivities$ | async as leads">
           <h2 class="mb-4 leads-title fw-bolder font-nunito">{{ leads.length }} Companies</h2>
         </ng-container>
         <div id="dealsTable" class="leads-table-container"
@@ -99,7 +99,7 @@
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border">
 
-                      <form [formGroup]="form" (ngSubmit)="onFormSubmitted(form)" id="addEventForm" autocomplete="off">
+                      <form [formGroup]="form" (ngSubmit)="onFormSubmitted()" id="addEventForm" autocomplete="off">
                         <div class="modal-header border-200 p-4">
                           <h5 class="modal-title text-1000 fs-2 lh-sm">Filter</h5>
                           <button class="btn p-1 text-900" type="button" data-bs-dismiss="modal"
@@ -120,33 +120,19 @@
 <!--                          </div>-->
                           <div class="mb-3">
                             <label class="fw-bold mb-2 text-1000">Scope</label>
-                            <input class="form-control" type="hidden" formControlName="scopes">
                             <ng-container *ngIf="activities$ | async as activities">
                               <div *ngFor="let item of activities.data" class="form-check">
-                                <input class="form-check-input" [id]="item.id" type="checkbox" [value]="item.name" (change)="onActivityChange($event, item.name)" [checked]="doesIncludeItem(item.name)"/>
+                                <input class="form-check-input" [id]="item.id" type="checkbox" [value]="item.name" (change)="onActivityChange($event, item.name)"/>
                                 <label class="form-check-label" [for]="item.id">{{ item.name }}</label>
                               </div>
                             </ng-container>
                           </div>
                           <div class="mb-3">
                             <label class="fw-bold mb-2 text-1000">Size</label>
-                            <input class="form-control" type="hidden" formControlName="sizes">
-<!--                            <div *ngFor="let item of sizes" class="form-check">-->
-<!--                              <input [id]="'size'+item.sizeFloor" class="form-check-input" type="checkbox" [value]="item.sizeFloor" (change)="onSizeChange($event, item.sizeFloor)" [checked]="doesIncludeItem(item.sizeFloor)">-->
-<!--                              <label [for]="'size'+item.sizeFloor" class="form-check-label">{{item.label}}</label>-->
-<!--                            </div>-->
-                            <!--                              <div class="form-check" *ngFor="let size of sizes">-->
-                            <!--                                <input class="form-check-input" [formControlName]="'size'+size.sizeFloor" [id]="'size'+size.sizeFloor" type="checkbox" value="" />-->
-                            <!--                                <label class="form-check-label" [for]="'size'+size.sizeFloor">{{ size.label }}</label>-->
-                            <!--                              </div>-->
-                            <!--                              <div class="form-check">-->
-                            <!--                                <input class="form-check-input" formControlName="size0" id="size0" type="checkbox" value="0" />-->
-                            <!--                                <label class="form-check-label" for="size0">0-50</label>-->
-                            <!--                              </div>-->
-                            <!--                              <div class="form-check">-->
-                            <!--                                <input class="form-check-input" formControlName="size51" id="size51" type="checkbox" value="51" />-->
-                            <!--                                <label class="form-check-label" for="size51">51-100</label>-->
-                            <!--                              </div>-->
+                            <div *ngFor="let item of sizes" class="form-check">
+                              <input [id]="'size'+item.label" class="form-check-input" type="checkbox" [value]="item.sizeVal" (change)="onSizeChange($event, item.sizeVal)">
+                              <label [for]="'size'+item.label" class="form-check-label">{{item.label}}</label>
+                            </div>
                           </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 border-0 pt-3">

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith, take} from 'rxjs';
+import {BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith} from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LeadsService } from '../../services/leads.service';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-leads-table',
@@ -21,35 +21,35 @@ export class LeadsTableComponent {
   private _chosenActivitiesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   public chosenActivities$: Observable<string[]> = this._chosenActivitiesSubject.asObservable().pipe(startWith([]));
 
+  private _chosenSizesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  public chosenSizes$: Observable<string[]> = this._chosenSizesSubject.asObservable().pipe(startWith([]));
+
   readonly sizes: Array<any> = [
     {
       label: '0-50',
-      sizeFloor: 0
+      sizeVal: '0-50'
     },
     {
       label: '51-100',
-      sizeFloor: 51
+      sizeVal: '51-100'
     },
     {
       label: '101-500',
-      sizeFloor: 101
+      sizeVal: '101-500'
     },
     {
       label: '501-1000',
-      sizeFloor: 501
+      sizeVal: '501-1000'
     },
     {
       label: '1001+',
-      sizeFloor: 1001
+      sizeVal: '1001'
     }
   ]
 
-  readonly form: FormGroup = new FormGroup({
-    sizes: new FormControl(),
-    scopes: new FormControl()
-  });
+  readonly form: FormGroup = new FormGroup({});
 
-  readonly leadsWithActivities$ = combineLatest([
+  public leadsWithActivities$ = combineLatest([
     this.leads$,
     this.activities$
   ]).pipe(
@@ -90,16 +90,39 @@ export class LeadsTableComponent {
   }
 
   filterByActivity(activities: string[], lead: any): boolean {
-    return activities.length > 0 ? !!activities.find(id => lead.scope.includes(id)) : true;
+    return activities.length > 0 ? !!activities.find(name => lead.scope.includes(name)) : true;
+  }
+
+  filterBySize(sizes: string[], lead: any) {
+    if (sizes.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        if (sizes[i].split('-').length > 1) {
+          const [minSize, maxSize] = sizes[i].split('-');
+
+          if (lead.size.total >= minSize && lead.size.total <= maxSize) {
+            return true;
+          }
+        } else {
+          const minSize = sizes[i].split('-')[0];
+          return lead.size.total >= minSize;
+        }
+      }
+    } else {
+      return true;
+    }
+
+    return false;
   }
 
   readonly filteredLeadsWithActivities$ = combineLatest([
     this.leadsWithActivities$,
-    this.chosenActivities$
+    this.chosenActivities$,
+    this.chosenSizes$
   ]).pipe(
-    map(([leadsWithActivities, chosenActivities]) => {
+    map(([leadsWithActivities, chosenActivities, chosenSizes]) => {
       return leadsWithActivities
         .filter((leadWithActivities: any) => this.filterByActivity(chosenActivities, leadWithActivities))
+        .filter((leadWithActivities: any) => this.filterBySize(chosenSizes, leadWithActivities))
     }),
     shareReplay(1)
   )
@@ -109,24 +132,19 @@ export class LeadsTableComponent {
     this._router.navigate(['/logout']);
   }
 
-  doesIncludeItem(chosenItem: string): boolean {
-    let activitiesArray: string[] = [];
-    this.chosenActivities$.subscribe((activities) => {
-      activitiesArray = activities;
-    })
-
-    return activitiesArray.includes(chosenItem);
-  }
+  public updatedActivities: Set<string> = new Set<string>([]);
+  public updatedSizes: Set<string> = new Set<string>([]);
 
   onActivityChange(event: any, chosenItem: string): void {
-    this._chosenActivitiesSubject.pipe(take(1)).subscribe(items => {
-      let updatedItems: Set<string> = new Set<string>(items);
-      event.target.checked ? updatedItems.add(chosenItem) : updatedItems.delete(chosenItem);
-      this._chosenActivitiesSubject.next(Array.from(updatedItems));
-    })
+    event.target.checked ? this.updatedActivities.add(chosenItem) : this.updatedActivities.delete(chosenItem);
   }
 
-  onFormSubmitted(form: FormGroup): void {
-    console.log(form)
+  onSizeChange(event: any, chosenItem: string): void {
+    event.target.checked ? this.updatedSizes.add(chosenItem) : this.updatedSizes.delete(chosenItem);
+  }
+
+  onFormSubmitted(): void {
+    this._chosenActivitiesSubject.next(Array.from(this.updatedActivities));
+    this._chosenSizesSubject.next(Array.from(this.updatedSizes));
   }
 }
