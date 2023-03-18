@@ -55,12 +55,20 @@
   .card-footer {
     background-color: white;
   }
+}
 
-  .btn-phoenix-secondary {
-    background-color: var(--phoenix-body-bg);
-    border-color: var(--bs-border-color);
+.btn-phoenix-primary, .btn-phoenix-secondary {
+  background-color: var(--phoenix-body-bg);
+  border-color: var(--bs-border-color);
+  border-width: 1px;
 
+  &:hover {
+    background-color: var(--bs-border-color);
   }
+}
+
+.btn-phoenix-primary {
+  color: var(--phoenix-btn-active-color);
 }
 
 a {
