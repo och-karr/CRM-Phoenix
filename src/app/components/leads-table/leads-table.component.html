@@ -69,7 +69,7 @@
     <div class="content leads-container">
       <div class="pb-9">
         <ng-container *ngIf="filteredLeadsWithActivities$ | async as leads">
-          <h2 class="mb-4 leads-title fw-bolder font-nunito">{{ leads.length }} Companies</h2>
+          <h2 class="mb-4 leads-title fw-bolder font-nunito ps-xl-4">{{ leads.length }} Companies</h2>
         </ng-container>
         <div id="dealsTable" class="leads-table-container"
              data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>

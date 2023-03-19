@@ -16,6 +16,8 @@ import {LeadsTableComponent} from "./components/leads-table/leads-table.componen
 import {VerifyGuard} from "./guards/verify/verify.guard";
 import {LogoutComponent} from "./components/logout/logout.component";
 import {LogoutComponentModule} from "./components/logout/logout.component-module";
+import {CreateLeadComponent} from "./components/create-lead/create-lead.component";
+import {CreateLeadComponentModule} from "./components/create-lead/create-lead.component-module";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -50,6 +52,10 @@ import {LogoutComponentModule} from "./components/logout/logout.component-module
       data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
     },
     {
+      path: 'create-lead',
+      component: CreateLeadComponent
+    },
+    {
       path: 'verify',
       component: VerifyComponent
     },
@@ -57,7 +63,7 @@ import {LogoutComponentModule} from "./components/logout/logout.component-module
       path: 'logout',
       component: LogoutComponent
     }
-  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule, LogoutComponentModule],
+  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule, LogoutComponentModule, CreateLeadComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
