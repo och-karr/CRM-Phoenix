@@ -9,7 +9,13 @@ import {ReactiveFormsModule} from "@angular/forms";
     RouterLink,
     RouterModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forChild([
+      {
+        path: 'create-lead',
+        component: CreateLeadComponent
+      },
+    ]),
   ],
   declarations: [CreateLeadComponent],
   providers: [],

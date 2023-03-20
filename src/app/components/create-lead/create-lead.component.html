@@ -1,285 +1,212 @@
-<main class="main" id="top">
-  <div class="container-fluid px-0">
-    <!--    navbar-->
-    <nav class="navbar navbar-top navbar-expand" id="navbarDefault">
-      <div class="collapse navbar-collapse justify-content-between">
+<div class="content leads-container">
 
-        <div class="navbar-logo">
-          <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse"
-                  aria-expanded="false" aria-label="Toggle Navigation">
-            <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
-          </button>
-          <a class="navbar-brand me-1 me-sm-3" [routerLink]="'/'">
-            <div class="d-flex align-items-center">
-              <div class="d-flex align-items-center">
-                <img class="navbar-logo" src="assets/img/icons/logo.png" alt="phoenix" />
-                <p class="logo-text ms-2 d-none d-sm-block">phoenix</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <ul class="navbar-nav navbar-nav-icons flex-row">
-
-          <!--          dropdown-->
-          <li class="nav-item dropdown">
-            <a class="nav-link lh-1 pe-0" id="navbarDropdownUser"
-               role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-              <div class="avatar avatar-l">
-                <img class="rounded-circle " src="assets/img/team/40x40/57.webp" alt="" />
-              </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
-                 aria-labelledby="navbarDropdownUser">
-              <div class="card position-relative border-0">
-                <div class="card-body p-0">
-                  <div class="text-center pt-4 pb-3">
-                    <div class="avatar avatar-xl ">
-                      <img class="rounded-circle " src="assets/img/team/72x72/57.webp" alt="" />
-                    </div>
-                    <h6 class="mt-2 fw-medium dropdown-profile-name">Jerry Seinfield</h6>
-                  </div>
-                </div>
-                <div class="card-footer p-0 border-top">
-                  <div class="px-3 mt-3">
-                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100" (click)="logoutUser()">
-                      <!--                      <i class="far fa-sign-out me-2"></i>-->
-                      <i class="fas fa-sign-out-alt me-2"></i>
-                      Sign out
-                    </a>
-                  </div>
-                  <div class="my-2 text-center fw-bold fs--2 text-600">
-                    <a class="text-600 me-1" [routerLink]="'/'">Privacy policy</a>&bull;
-                    <a class="text-600 mx-1" [routerLink]="'/'">Terms</a>&bull;
-                    <a class="text-600 ms-1" [routerLink]="'/'">Cookies</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-
-        </ul>
-
-      </div>
-    </nav>
-
-
-    <div class="content leads-container">
-
-      <div class="border-bottom mb-7 mx-n3 mx-lg-n6 px-lg-6">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="d-sm-flex justify-content-between">
-              <h2 class="mb-4 leads-title fw-bolder font-nunito">Create a new lead</h2>
-              <div class="d-flex mb-3">
-                <button class="btn btn-phoenix-primary me-2 px-6">Cancel</button>
-                <button class="btn btn-primary">Create lead</button>
-              </div>
-            </div>
+  <div class="border-bottom mb-7 mx-n3 mx-lg-n6 px-lg-6">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="d-sm-flex justify-content-between">
+          <h2 class="mb-4 leads-title fw-bolder font-nunito">Create a new lead</h2>
+          <div class="d-flex mb-3">
+            <button class="btn btn-phoenix-primary me-2 px-6">Cancel</button>
+            <button class="btn btn-primary">Create lead</button>
           </div>
         </div>
       </div>
-      <form [formGroup]="form" (ngSubmit)="onFormSubmitted(form)">
-        <div class="row">
-          <div class="col-xl-12">
-<!--            <form class="row g-3 mb-9">-->
-            <form class="row g-3 mb-9" formGroupName="leadInformation">
-              <h4 class="mb-3 fw-medium lead-subtitle">Lead Information</h4>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="companyName" id="companyName" type="text" placeholder="Company name" />
-                  <label>Company name</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('companyName')!.invalid && (leadInformation.get('companyName')!.touched || leadInformation.get('companyName')!.dirty)">
-                      Company name is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="websiteLink" id="floatingInputWebsitelink" type="text" placeholder="Website link" />
-                  <label>Website link</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('websiteLink')!.invalid && (leadInformation.get('websiteLink')!.touched || leadInformation.get('websiteLink')!.dirty)">
-                      Website link is required or invalid
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="linkedinLink" id="floatingInputLinkedin" type="text" placeholder="Linkedin link" />
-                  <label>Linkedin link</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('linkedinLink')!.invalid && (leadInformation.get('linkedinLink')!.touched || leadInformation.get('linkedinLink')!.dirty)">
-                      Linkedin is required or invalid
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="location" id="floatingInputLocation" type="text" placeholder="Location" />
-                  <label>Location</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('location')!.invalid && (leadInformation.get('location')!.touched || leadInformation.get('location')!.dirty)">
-                      Location is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="industry" id="floatingInputIndustry" type="text" placeholder="Industry" />
-                  <label>Industry</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('industry')!.invalid && (leadInformation.get('industry')!.touched || leadInformation.get('industry')!.dirty)">
-                      Industry is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="annualRevenue" id="floatingInputRevenue" type="number" placeholder="revenue" />
-                  <label>Annual revenue </label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('annualRevenue')!.invalid && (leadInformation.get('annualRevenue')!.touched || leadInformation.get('annualRevenue')!.dirty)">
-                      Annual revenue is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <form class="row g-3 mb-9" formGroupName="activities">
-              <h4 class="mt-6 fw-medium lead-subtitle">Activities</h4>
-              <div class="col-12">
-                <div class="form-floating" *ngIf="activities$ | async as activities">
-                  <div class="form-check form-check-inline" *ngFor="let activity of activities.data; index as i">
-                    <input class="form-check-input" [formControlName]="'activity-' + i" [id]="'activity-' + i"  type="checkbox" />
-                    <label class="form-check-label" [for]="'activity-' + i">{{ activity.name }}</label>
-                  </div>
-<!--                  <div class="form-check form-check-inline">-->
-<!--                    <input class="form-check-input" formControlName="externalProject" id="inlineCheckbox2" type="checkbox" [value]="option2" />-->
-<!--                    <label class="form-check-label">External Project</label>-->
-<!--                    <div class="auth-form-error">-->
-<!--                      <div class="text-danger fs-sm&#45;&#45;2" *ngIf="activities.get('externalProject')!.invalid && (activities.get('externalProject')!.touched || activities.get('externalProject')!.dirty)">-->
-<!--                        Externel Project is required-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="form-check form-check-inline">-->
-<!--                    <input class="form-check-input" formControlName="recruitmentAgency" id="inlineCheckbox2" type="checkbox" value="option2" />-->
-<!--                    <label class="form-check-label">Recruitment Agency</label>-->
-<!--                    <div class="auth-form-error">-->
-<!--                      <div class="text-danger fs-sm&#45;&#45;2" *ngIf="activities.get('recruitmentAgency')!.invalid && (activities.get('recruitmentAgency')!.touched || activities.get('recruitmentAgency')!.dirty)">-->
-<!--                        Recruitment agency is required-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-                </div>
-              </div>
-            </form>
-
-            <form class="row g-3 mb-9" formGroupName="companySize">
-              <h4 class="mt-6 fw-medium lead-subtitle">Company Size</h4>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="totalSize" id="floatingInputTotalSize" type="number" placeholder="Total size" />
-                  <label>Total size</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="companySize.get('totalSize')!.invalid && (companySize.get('totalSize')!.touched || companySize.get('totalSize')!.dirty)">
-                      Total size is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="devSize" id="floatingInputDevSize" type="number" placeholder="Dev Size" />
-                  <label>Dev Size</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="companySize.get('devSize')!.invalid && (companySize.get('devSize')!.touched || companySize.get('devSize')!.dirty)">
-                      Dev size is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <input class="form-control" formControlName="feSize" type="number" placeholder="FE Size" />
-                  <label>FE Size</label>
-                  <div class="auth-form-error">
-                    <div class="text-danger fs-sm--2" *ngIf="companySize.get('feSize')!.invalid && (companySize.get('feSize')!.touched || companySize.get('feSize')!.dirty)">
-                      FE size is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <form class="row g-3 mb-9" formGroupName="hiringInformation">
-              <h4 class="mt-6 fw-medium lead-subtitle">Hiring Information</h4>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" formControlName="currently" id="flexSwitchCheckDefault" type="checkbox" />
-                    <label class="form-check-label">Is currently hiring?</label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" formControlName="junior" id="flexSwitchCheckDefault2" type="checkbox" />
-                    <label class="form-check-label">Is hiring junior?</label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="form-floating">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" formControlName="talent" id="flexSwitchCheckDefault3" type="checkbox" />
-                    <label class="form-check-label">Has Talent program?</label>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <h4 class="mt-6 fw-medium lead-subtitle">Status</h4>
-            <div class="col-12">
-              <select class="form-select form-select-lg mb-3" formControlName="status" *ngIf="activities$ | async as activities">
-                <option *ngFor="let item of activities.data; first as first" [value]="item.name" [selected]="first">{{ item.name }}</option>
-              </select>
-            </div>
-            <h4 class="mt-6 fw-medium lead-subtitle">Notes</h4>
-            <div class="col-12">
-              <div class="form-floating">
-                <textarea formControlName="notes" class="form-control" id="floatingProjectOverview" placeholder="Leave a comment here"
-                          style="height: 128px"></textarea>
-                <label>Lead description</label>
-              </div>
-            </div>
-            <div class="col-12 d-flex justify-content-end mt-6">
-              <button  class="btn btn-primary" type="submit">Create lead</button>
-            </div>
-          </div>
-        </div>
-      </form>
-      <footer class="footer position-absolute">
-        <div class="row g-0 justify-content-between align-items-center h-100">
-          <div class="col-12 col-sm-auto text-center">
-            <p class="mb-0 mt-2 mt-sm-0 text-900">Thank you for creating with Phoenix<span
-              class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br
-              class="d-sm-none" />2023 &copy;<a class="mx-1" href="https://themewagon.com">Themewagon</a></p>
-          </div>
-          <div class="col-12 col-sm-auto text-center">
-            <p class="mb-0 text-600">v1.9.0</p>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
-</main>
+  <form [formGroup]="form" (ngSubmit)="onFormSubmitted(form)">
+    <div class="row">
+      <div class="col-xl-12">
+        <!--            <form class="row g-3 mb-9">-->
+        <form class="row g-3 mb-9" formGroupName="leadInformation">
+          <h4 class="mb-3 fw-medium lead-subtitle">Lead Information</h4>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="companyName" id="companyName" type="text" placeholder="Company name" />
+              <label>Company name</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('companyName')!.invalid && (leadInformation.get('companyName')!.touched || leadInformation.get('companyName')!.dirty)">
+                  Company name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="websiteLink" id="floatingInputWebsitelink" type="text" placeholder="Website link" />
+              <label>Website link</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('websiteLink')!.invalid && (leadInformation.get('websiteLink')!.touched || leadInformation.get('websiteLink')!.dirty)">
+                  Website link is required or invalid
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="linkedinLink" id="floatingInputLinkedin" type="text" placeholder="Linkedin link" />
+              <label>Linkedin link</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('linkedinLink')!.invalid && (leadInformation.get('linkedinLink')!.touched || leadInformation.get('linkedinLink')!.dirty)">
+                  Linkedin is required or invalid
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="location" id="floatingInputLocation" type="text" placeholder="Location" />
+              <label>Location</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('location')!.invalid && (leadInformation.get('location')!.touched || leadInformation.get('location')!.dirty)">
+                  Location is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="industry" id="floatingInputIndustry" type="text" placeholder="Industry" />
+              <label>Industry</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('industry')!.invalid && (leadInformation.get('industry')!.touched || leadInformation.get('industry')!.dirty)">
+                  Industry is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="annualRevenue" id="floatingInputRevenue" type="number" placeholder="revenue" />
+              <label>Annual revenue </label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="leadInformation.get('annualRevenue')!.invalid && (leadInformation.get('annualRevenue')!.touched || leadInformation.get('annualRevenue')!.dirty)">
+                  Annual revenue is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form class="row g-3 mb-9" formGroupName="activities">
+          <h4 class="mt-6 fw-medium lead-subtitle">Activities</h4>
+          <div class="col-12">
+            <div class="form-floating" *ngIf="activities$ | async as activitiesArr">
+              <div class="form-check form-check-inline" *ngFor="let activity of activitiesArr.data; index as i">
+                <input class="form-check-input" [formControlName]="activity.id" [id]="'activity-' + i"  type="checkbox" />
+                <label class="form-check-label" [for]="'activity-' + i">{{ activity.name }}</label>
+              </div>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="(activities.hasError('atLeastOneSelected')) && activities.touched && activities.dirty">
+                  {{ activities.getError('atLeastOneSelected') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form class="row g-3 mb-9" formGroupName="companySize">
+          <h4 class="mt-6 fw-medium lead-subtitle">Company Size</h4>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="totalSize" id="floatingInputTotalSize" type="number" placeholder="Total size" />
+              <label>Total size</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="companySize.get('totalSize')!.invalid && (companySize.get('totalSize')!.touched || companySize.get('totalSize')!.dirty)">
+                  Total size is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="devSize" id="floatingInputDevSize" type="number" placeholder="Dev Size" />
+              <label>Dev Size</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="companySize.get('devSize')!.invalid && (companySize.get('devSize')!.touched || companySize.get('devSize')!.dirty)">
+                  Dev size is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <input class="form-control" formControlName="feSize" type="number" placeholder="FE Size" />
+              <label>FE Size</label>
+              <div class="auth-form-error">
+                <div class="text-danger fs-sm--2" *ngIf="companySize.get('feSize')!.invalid && (companySize.get('feSize')!.touched || companySize.get('feSize')!.dirty)">
+                  FE size is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form class="row g-3 mb-9" formGroupName="hiringInformation">
+          <h4 class="mt-6 fw-medium lead-subtitle">Hiring Information</h4>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <div class="form-check form-switch">
+                <input class="form-check-input" formControlName="currently" id="flexSwitchCheckDefault" type="checkbox" />
+                <label class="form-check-label">Is currently hiring?</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <div class="form-check form-switch">
+                <input class="form-check-input" formControlName="junior" id="flexSwitchCheckDefault2" type="checkbox" />
+                <label class="form-check-label">Is hiring junior?</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-floating">
+              <div class="form-check form-switch">
+                <input class="form-check-input" formControlName="talent" id="flexSwitchCheckDefault3" type="checkbox" />
+                <label class="form-check-label">Has Talent program?</label>
+              </div>
+            </div>
+          </div>
+          <div class="auth-form-error">
+            <div class="text-danger fs-sm--2" *ngIf="(hiringInformation.hasError('atLeastOneSelected')) && hiringInformation.touched && hiringInformation.dirty">
+              {{ hiringInformation.getError('atLeastOneSelected') }}
+            </div>
+          </div>
+        </form>
+
+        <h4 class="mt-6 fw-medium lead-subtitle">Status</h4>
+        <div class="col-12">
+          <select class="form-select form-select-lg mb-3" formControlName="status">
+            <option value="Preliminaries" selected>Preliminaries</option>
+            <option value="Preliminaries" selected>Investigation</option>
+            <option value="Preliminaries" selected>Demonstrating Capabilities</option>
+            <option value="Preliminaries" selected>Obtaining Commitment</option>
+          </select>
+        </div>
+        <h4 class="mt-6 fw-medium lead-subtitle">Notes</h4>
+        <div class="col-12">
+          <div class="form-floating">
+                <textarea formControlName="notes" class="form-control" id="floatingProjectOverview" placeholder="Leave a comment here"
+                          style="height: 128px"></textarea>
+            <label>Lead description</label>
+          </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end mt-6">
+          <button [disabled]="form.invalid" class="btn btn-primary" type="submit">Create lead</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <footer class="footer position-absolute">
+    <div class="row g-0 justify-content-between align-items-center h-100">
+      <div class="col-12 col-sm-auto text-center">
+        <p class="mb-0 mt-2 mt-sm-0 text-900">Thank you for creating with Phoenix<span
+          class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br
+          class="d-sm-none" />2023 &copy;<a class="mx-1" href="https://themewagon.com">Themewagon</a></p>
+      </div>
+      <div class="col-12 col-sm-auto text-center">
+        <p class="mb-0 text-600">v1.9.0</p>
+      </div>
+    </div>
+  </footer>
+</div>
