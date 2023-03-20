@@ -17,7 +17,8 @@ import {VerifyGuard} from "./guards/verify/verify.guard";
 import {LogoutComponent} from "./components/logout/logout.component";
 import {LogoutComponentModule} from "./components/logout/logout.component-module";
 import {CreateLeadComponent} from "./components/create-lead/create-lead.component";
-import {CreateLeadComponentModule} from "./components/create-lead/create-lead.component-module";
+import {LeadsNavComponent} from "./components/leads-nav/leads-nav.component";
+import {LeadsNavComponentModule} from "./components/leads-nav/leads-nav.component-module";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -51,10 +52,10 @@ import {CreateLeadComponentModule} from "./components/create-lead/create-lead.co
       canActivate: [VerifyGuard],
       data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
     },
-    {
-      path: 'create-lead',
-      component: CreateLeadComponent
-    },
+    // {
+    //   path: 'create-lead',
+    //   component: CreateLeadComponent
+    // },
     {
       path: 'verify',
       component: VerifyComponent
@@ -62,8 +63,25 @@ import {CreateLeadComponentModule} from "./components/create-lead/create-lead.co
     {
       path: 'logout',
       component: LogoutComponent
+    },
+    {
+      path: '',
+      component: LeadsNavComponent,
+      // loadChildren: () => CreateLeadComponentModule,
+      children: [
+        {
+          path: 'create-lead',
+          component: CreateLeadComponent,
+
+        },
+        // {
+        //   path: 'leads',
+        //   component: LeadsTableComponent,
+        //   loadChildren: () => LeadsTableComponentModule
+        // },
+      ]
     }
-  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule, LogoutComponentModule, CreateLeadComponentModule],
+  ]), AuthComponentModule, VerifyComponentModule, CompleteProfileComponentModule, LogoutComponentModule, LeadsNavComponentModule, LeadsTableComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
