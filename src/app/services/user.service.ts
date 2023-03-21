@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import {Observable, of, switchMap, tap} from 'rxjs';
 import {AccessTokenService} from "./context/access-token.service";
 import {RefreshTokenService} from "./context/refresh-token.service";
+import {RoleService} from "./context/role.service";
 
 @Injectable()
 export class UserService {
-  constructor(private _httpClient: HttpClient, private _accessTokenService: AccessTokenService, private _refreshTokenService: RefreshTokenService) {
+  constructor(private _httpClient: HttpClient, private _accessTokenService: AccessTokenService, private _refreshTokenService: RefreshTokenService, private _roleService: RoleService) {
   }
 
   login(data: any): Observable<any> {
@@ -32,6 +33,10 @@ export class UserService {
     return this._httpClient.get<any>('https://us-central1-courses-auth.cloudfunctions.net/auth/me').pipe(
       tap(val => {
         console.log(val)
+        console.log(val.data.user.context.role);
+        if (val.data.user.context.role !== undefined) {
+          this._roleService.set(val.data.user.context.role);
+        }
       })
     );
   }

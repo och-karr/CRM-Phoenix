@@ -14,6 +14,7 @@ import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 import {LeadsService} from "./services/leads.service";
 import {RefreshTokenService} from "./services/context/refresh-token.service";
 import {RefreshInterceptor} from "./refresh.interceptor";
+import {RoleService} from "./services/context/role.service";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {RefreshInterceptor} from "./refresh.interceptor";
     HasBioGuard,
     AccessTokenService,
     LeadsService,
-    RefreshTokenService
+    RefreshTokenService,
+    RoleService
   ],
   bootstrap: [AppComponent]
 })
