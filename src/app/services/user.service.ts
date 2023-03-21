@@ -34,9 +34,7 @@ export class UserService {
       tap(val => {
         console.log(val)
         console.log(val.data.user.context.role);
-        if (val.data.user.context.role !== undefined) {
-          this._roleService.set(val.data.user.context.role);
-        }
+        this._roleService.set(val.data.user.context.role);
       })
     );
   }

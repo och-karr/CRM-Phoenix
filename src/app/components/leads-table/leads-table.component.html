@@ -8,10 +8,10 @@
       <div class="row g-3 justify-content-between mb-4">
         <div class="col-auto">
           <div class="d-md-flex justify-content-between">
-            <div>
-              <button class="btn btn-primary me-4" [routerLink]="'/create-lead'">
+            <div *ngIf="userRole$ | async as userRole">
+              <button *ngIf="userRole === 'admin'" class="btn btn-primary me-4" [routerLink]="'/create-lead'">
                 <i class="fas fa-plus me-2"></i>
-                Create Lead
+                Create Lead {{userRole}}
               </button>
             </div>
           </div>

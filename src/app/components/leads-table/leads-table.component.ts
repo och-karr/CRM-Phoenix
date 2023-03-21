@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith, tap} from 'rxjs';
+import { FormGroup } from '@angular/forms';
+import { BehaviorSubject, Observable, combineLatest, map, shareReplay, startWith, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LeadsService } from '../../services/leads.service';
-import {FormGroup} from "@angular/forms";
+import { RoleService } from '../../services/context/role.service';
 
 @Component({
   selector: 'app-leads-table',
@@ -13,7 +14,9 @@ import {FormGroup} from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LeadsTableComponent {
-  constructor(private _userService: UserService, private _router: Router, private _leadsService: LeadsService) { }
+  constructor(private _userService: UserService, private _router: Router, private _leadsService: LeadsService, private _roleService: RoleService) { }
+
+  readonly userRole$: Observable<string | null> = this._roleService.get();
 
   readonly leads$: Observable<any> = this._leadsService.getLeads().pipe(
     tap(data => console.log(data))
@@ -56,38 +59,38 @@ export class LeadsTableComponent {
     this.activities$
   ]).pipe(
     map(([leads, activities]) => {
-        return this._mapToLeadsWithActivities(leads.data, activities.data)
-      }
+      return this._mapToLeadsWithActivities(leads.data, activities.data)
+    }
     ),
   )
 
   private _mapToLeadsWithActivities(leads: any, activities: any): any {
-    const activitiesMap = activities.reduce((a: any, c: any) => ({...a, [c.id]: c}), {}) as Record<string, any>
+    const activitiesMap = activities.reduce((a: any, c: any) => ({ ...a, [c.id]: c }), {}) as Record<string, any>
 
     return leads.map((lead: any) => ({
-        name: {
-          companyName: lead.name,
-          linkedinLink: lead.linkedinLink,
-          websiteLink: lead.websiteLink
-        },
-        scope: lead.activityIds.map((id: any) => activitiesMap[id]?.name),
-        hiring: {
-          isHiring: lead.hiring.active,
-          juniors: lead.hiring.junior,
-          talentProgram: lead.hiring.talentProgram
-        },
-        industry: lead.industry,
-        location: lead.location,
-        size: {
-          total: lead.companySize.total,
-          dev: lead.companySize.dev,
-          fe: lead.companySize.fe
-        },
-        revenue: {
-          total: lead.annualRevenue,
-          pe: 1
-        }
-      })
+      name: {
+        companyName: lead.name,
+        linkedinLink: lead.linkedinLink,
+        websiteLink: lead.websiteLink
+      },
+      scope: lead.activityIds.map((id: any) => activitiesMap[id]?.name),
+      hiring: {
+        isHiring: lead.hiring.active,
+        juniors: lead.hiring.junior,
+        talentProgram: lead.hiring.talentProgram
+      },
+      industry: lead.industry,
+      location: lead.location,
+      size: {
+        total: lead.companySize.total,
+        dev: lead.companySize.dev,
+        fe: lead.companySize.fe
+      },
+      revenue: {
+        total: lead.annualRevenue,
+        pe: 1
+      }
+    })
     )
   }
 
