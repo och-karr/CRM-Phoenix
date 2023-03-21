@@ -16,6 +16,8 @@ import {RefreshTokenService} from "./services/context/refresh-token.service";
 import {RefreshInterceptor} from "./refresh.interceptor";
 import {RoleService} from "./services/context/role.service";
 import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
+import {LoggedInGuard} from "./guards/logged-in/logged-in.guard";
+import {LoggedService} from "./services/context/logged.service";
 
 @NgModule({
   declarations: [
@@ -35,10 +37,12 @@ import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
     VerifyGuard,
     HasBioGuard,
     IsAdminGuard,
+    LoggedInGuard,
     AccessTokenService,
     LeadsService,
     RefreshTokenService,
-    RoleService
+    RoleService,
+    LoggedService
   ],
   bootstrap: [AppComponent]
 })

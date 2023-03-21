@@ -21,6 +21,7 @@ import {CreateLeadComponentModule} from "./components/create-lead/create-lead.co
 import {LeadsNavComponent} from "./components/leads-nav/leads-nav.component";
 import {LeadsNavComponentModule} from "./components/leads-nav/leads-nav.component-module";
 import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
+import {LoggedInGuard} from "./guards/logged-in/logged-in.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -31,8 +32,8 @@ import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
         {
           path: 'login',
           component: LoginComponent,
-          // canActivate: [VerifyGuard],
-          // data: {redirectUrl: '/verify', isLogin: true},
+          canActivate: [LoggedInGuard],
+          data: {loggedUrl: '/leads'},
           loadChildren: () => LoginComponentModule
         },
         {
@@ -42,21 +43,15 @@ import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
         }
       ]
     },
+    // {
+    //   path: '**',
+    //   redirectTo: '/auth/login',
+    //   pathMatch: 'full'
+    // },
     {
       path: 'complete-profile',
       component: CompleteProfileComponent,
-      canActivate: [ HasBioGuard],
-      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login', hasBioUrl: '/auth/register'},
     },
-    // {
-    //   path: 'leads',
-    //   component: LeadsTableComponent,
-    //
-    // },
-    // {
-    //   path: 'create-lead',
-    //   component: CreateLeadComponent
-    // },
     {
       path: 'verify',
       component: VerifyComponent
@@ -70,19 +65,24 @@ import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
       component: LeadsNavComponent,
       children: [
         {
+          path: '',
+          redirectTo: '/auth/login',
+          pathMatch: 'full'
+        },
+        {
           path: 'create-lead',
           component: CreateLeadComponent,
-          canActivate: [VerifyGuard, IsAdminGuard],
-          data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login', roleUrl: ''},
+          canActivate: [IsAdminGuard, VerifyGuard, HasBioGuard],
+          data: {verifyUrl: '/verify', loginUrl: '/auth/login', hasBioUrl: '/complete-profile'},
           loadChildren: () => CreateLeadComponentModule
         },
         {
           path: 'leads',
           component: LeadsTableComponent,
-          canActivate: [VerifyGuard],
-          data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
+          canActivate: [VerifyGuard, HasBioGuard],
+          data: {verifyUrl: '/verify', loginUrl: '/auth/login', hasBioUrl: '/complete-profile'},
           loadChildren: () => LeadsTableComponentModule
-        },
+        }
       ]
     }
   ]), AuthComponentModule, VerifyComponentModule, CompleteProfileComponentModule, LogoutComponentModule, LeadsNavComponentModule],
