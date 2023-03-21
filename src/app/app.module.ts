@@ -12,6 +12,8 @@ import {AccessTokenService} from "./services/context/access-token.service";
 import {AuthInterceptor} from "./auth.interceptor";
 import {HasBioGuard} from "./guards/has-bio/has-bio.guard";
 import {LeadsService} from "./services/leads.service";
+import {RefreshTokenService} from "./services/context/refresh-token.service";
+import {RefreshInterceptor} from "./refresh.interceptor";
 
 @NgModule({
   declarations: [
@@ -26,11 +28,13 @@ import {LeadsService} from "./services/leads.service";
   providers: [
     { provide: STORAGE, useValue: localStorage },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RefreshInterceptor, multi: true },
     UserService,
     VerifyGuard,
     HasBioGuard,
     AccessTokenService,
-    LeadsService
+    LeadsService,
+    RefreshTokenService
   ],
   bootstrap: [AppComponent]
 })
