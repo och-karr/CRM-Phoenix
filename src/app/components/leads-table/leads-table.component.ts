@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import { BehaviorSubject, Observable, combineLatest, map, shareReplay, startWith, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -19,9 +19,24 @@ export class LeadsTableComponent {
   readonly userRole$: Observable<string | null> = this._roleService.get();
 
   readonly leads$: Observable<any> = this._leadsService.getLeads().pipe(
-    tap(data => console.log(data))
+    tap(data => console.log(data)),
+    shareReplay(1)
   );
   readonly activities$: Observable<any> = this._leadsService.getActivities();
+
+  readonly location$: Observable<any> = this.leads$.pipe(
+    map(leads => {
+      let locationSet: Set<string> = new Set<string>([]);
+      leads.data.map((lead: any) => {
+        locationSet.add(lead.location)
+      })
+
+      return Array.from(locationSet);
+    })
+  );
+
+  private _chosenLocationSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  public chosenLocation$: Observable<string | null> = this._chosenLocationSubject.asObservable();
 
   private _chosenActivitiesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   public chosenActivities$: Observable<string[]> = this._chosenActivitiesSubject.asObservable().pipe(startWith([]));
@@ -119,15 +134,21 @@ export class LeadsTableComponent {
     return false;
   }
 
+  filterByLocation(location: string | null, lead: any): boolean {
+    return location === null ? true : lead.location === location;
+  }
+
   readonly filteredLeadsWithActivities$ = combineLatest([
     this.leadsWithActivities$,
     this.chosenActivities$,
-    this.chosenSizes$
+    this.chosenSizes$,
+    this.chosenLocation$
   ]).pipe(
-    map(([leadsWithActivities, chosenActivities, chosenSizes]) => {
+    map(([leadsWithActivities, chosenActivities, chosenSizes, locationValue]) => {
       return leadsWithActivities
         .filter((leadWithActivities: any) => this.filterByActivity(chosenActivities, leadWithActivities))
         .filter((leadWithActivities: any) => this.filterBySize(chosenSizes, leadWithActivities))
+        .filter((leadWithActivities: any) => this.filterByLocation(locationValue, leadWithActivities))
     }),
     shareReplay(1)
   )
@@ -137,8 +158,9 @@ export class LeadsTableComponent {
     this._router.navigate(['/logout']);
   }
 
-  public updatedActivities: Set<string> = new Set<string>([]);
-  public updatedSizes: Set<string> = new Set<string>([]);
+  private updatedActivities: Set<string> = new Set<string>([]);
+  private updatedSizes: Set<string> = new Set<string>([]);
+  private location: string | null = null;
 
   onActivityChange(event: any, chosenItem: string): void {
     event.target.checked ? this.updatedActivities.add(chosenItem) : this.updatedActivities.delete(chosenItem);
@@ -148,8 +170,13 @@ export class LeadsTableComponent {
     event.target.checked ? this.updatedSizes.add(chosenItem) : this.updatedSizes.delete(chosenItem);
   }
 
+  onLocationChange(event: any) {
+    this.location = event.target.value;
+  }
+
   onFormSubmitted(): void {
     this._chosenActivitiesSubject.next(Array.from(this.updatedActivities));
     this._chosenSizesSubject.next(Array.from(this.updatedSizes));
+    this._chosenLocationSubject.next(this.location);
   }
 }

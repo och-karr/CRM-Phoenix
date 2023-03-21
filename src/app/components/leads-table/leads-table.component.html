@@ -40,16 +40,13 @@
                       </button>
                     </div>
                     <div class="modal-body pt-4 pb-2 px-4">
-                      <!--                          <div class="mb-3">-->
-                      <!--                            <label class="fw-bold mb-2 text-1000" for="leadStatus">Sales Stage</label>-->
-                      <!--                            <select class="form-select" id="leadStatus">-->
-                      <!--                              <option value="newLead" selected="selected">Preliminaries</option>-->
-                      <!--                              <option value="coldLead">Investigation</option>-->
-                      <!--                              <option value="canceled">Demonstrating Capabilities</option>-->
-                      <!--                              <option value="wonLead">Obtaining Commitment</option>-->
-                      <!--                              <option value="wonLead">No Match</option>-->
-                      <!--                            </select>-->
-                      <!--                          </div>-->
+                      <div class="mb-3" *ngIf="location$ | async as location">
+                        <label class="fw-bold mb-2 text-1000">Location</label>
+                        <select #location class="form-select" id="leadStatus" (change)="onLocationChange($event)">
+                          <option [value]="null" [hidden]="true">Select sorting option</option>
+                          <option  *ngFor="let item of location" [value]="item">{{item}}</option>
+                        </select>
+                      </div>
                       <div class="mb-3">
                         <label class="fw-bold mb-2 text-1000">Scope</label>
                         <ng-container *ngIf="activities$ | async as activities">
