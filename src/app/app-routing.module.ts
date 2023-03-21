@@ -20,6 +20,7 @@ import {CreateLeadComponent} from "./components/create-lead/create-lead.componen
 import {CreateLeadComponentModule} from "./components/create-lead/create-lead.component-module";
 import {LeadsNavComponent} from "./components/leads-nav/leads-nav.component";
 import {LeadsNavComponentModule} from "./components/leads-nav/leads-nav.component-module";
+import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -71,6 +72,8 @@ import {LeadsNavComponentModule} from "./components/leads-nav/leads-nav.componen
         {
           path: 'create-lead',
           component: CreateLeadComponent,
+          canActivate: [VerifyGuard, IsAdminGuard],
+          data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login', roleUrl: ''},
           loadChildren: () => CreateLeadComponentModule
         },
         {
