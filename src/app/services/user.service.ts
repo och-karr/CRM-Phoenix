@@ -4,10 +4,11 @@ import {Observable, of, switchMap, tap} from 'rxjs';
 import {AccessTokenService} from "./context/access-token.service";
 import {RefreshTokenService} from "./context/refresh-token.service";
 import {RoleService} from "./context/role.service";
+import {LoggedService} from "./context/logged.service";
 
 @Injectable()
 export class UserService {
-  constructor(private _httpClient: HttpClient, private _accessTokenService: AccessTokenService, private _refreshTokenService: RefreshTokenService, private _roleService: RoleService) {
+  constructor(private _httpClient: HttpClient, private _accessTokenService: AccessTokenService, private _refreshTokenService: RefreshTokenService, private _roleService: RoleService, private _loggedService: LoggedService) {
   }
 
   login(data: any): Observable<any> {
@@ -27,6 +28,8 @@ export class UserService {
   logout(): void {
     this._accessTokenService.remove();
     this._refreshTokenService.remove();
+    this._roleService.remove();
+    this._loggedService.remove();
   }
 
   verify(): Observable<any> {

@@ -43,6 +43,11 @@ import {LoggedInGuard} from "./guards/logged-in/logged-in.guard";
         }
       ]
     },
+    // {
+    //   path: '**',
+    //   redirectTo: '/auth/login',
+    //   pathMatch: 'full'
+    // },
     {
       path: 'complete-profile',
       component: CompleteProfileComponent,
@@ -59,6 +64,11 @@ import {LoggedInGuard} from "./guards/logged-in/logged-in.guard";
       path: '',
       component: LeadsNavComponent,
       children: [
+        {
+          path: '',
+          redirectTo: '/auth/login',
+          pathMatch: 'full'
+        },
         {
           path: 'create-lead',
           component: CreateLeadComponent,
