@@ -11,7 +11,7 @@
             <div *ngIf="userRole$ | async as userRole">
               <button *ngIf="userRole === 'admin'" class="btn btn-primary me-4" [routerLink]="'/create-lead'">
                 <i class="fas fa-plus me-2"></i>
-                Create Lead {{userRole}}
+                Create Lead
               </button>
             </div>
           </div>
