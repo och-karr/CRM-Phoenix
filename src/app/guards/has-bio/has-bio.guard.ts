@@ -11,14 +11,15 @@ export class HasBioGuard implements CanActivate {
   canActivate(activatedRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this._userService.getBio().pipe(
       map(data => {
-        return !data ?
+        return data ?
           true : this._router.parseUrl(activatedRoute.data['hasBioUrl'])
       }),
       catchError((err) => {
+        console.log('no bio!')
         if (err.status === 404) {
-          return of(true);
-        } else {
           return of(this._router.parseUrl(activatedRoute.data['hasBioUrl']))
+        } else {
+          return of(true);
         }
       })
     )

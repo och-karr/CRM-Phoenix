@@ -12,10 +12,15 @@ import {Router} from "@angular/router";
 })
 export class CompleteProfileComponent {
   readonly form: FormGroup = new FormGroup({
-    bio: new FormControl('', [Validators.required, Validators.pattern('^(?:\\b\\w+\\b[\\s\\r\\n]*){10,}$')])
+    bio: new FormControl('', [Validators.required, Validators.pattern('^(?=(?:\\S+\\s+){9,}\\S+)(?=(?:[^.?!]+[.?!]\\s+){1,})[\\s\\S]*$')])
   });
 
   constructor(private _userService: UserService, private _router: Router){}
+
+  logoutUser() {
+    this._userService.logout();
+    window.location.reload();
+  }
 
   onFormSubmitted(form: FormGroup) {
     this._userService.addBio({
@@ -25,7 +30,7 @@ export class CompleteProfileComponent {
     })
       .subscribe({
         next: () => {
-          // this._router.navigate(['/leads'])
+          this._router.navigate(['/leads'])
         },
         error: () => {
         }
