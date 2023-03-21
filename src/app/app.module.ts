@@ -15,6 +15,7 @@ import {LeadsService} from "./services/leads.service";
 import {RefreshTokenService} from "./services/context/refresh-token.service";
 import {RefreshInterceptor} from "./refresh.interceptor";
 import {RoleService} from "./services/context/role.service";
+import {IsAdminGuard} from "./guards/is-admin/is-admin.guard";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {RoleService} from "./services/context/role.service";
     UserService,
     VerifyGuard,
     HasBioGuard,
+    IsAdminGuard,
     AccessTokenService,
     LeadsService,
     RefreshTokenService,
