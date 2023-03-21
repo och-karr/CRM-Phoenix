@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LeadsTableComponent } from './leads-table.component';
 import {RouterLink, RouterModule} from "@angular/router";
-import {MatTableModule} from "@angular/material/table";
 import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 
@@ -9,7 +8,6 @@ import {ReactiveFormsModule} from "@angular/forms";
     imports: [
       RouterLink,
       RouterModule,
-      MatTableModule,
       CommonModule,
       ReactiveFormsModule
     ],

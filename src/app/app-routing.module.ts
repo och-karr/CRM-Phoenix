@@ -16,6 +16,10 @@ import {LeadsTableComponent} from "./components/leads-table/leads-table.componen
 import {VerifyGuard} from "./guards/verify/verify.guard";
 import {LogoutComponent} from "./components/logout/logout.component";
 import {LogoutComponentModule} from "./components/logout/logout.component-module";
+import {CreateLeadComponent} from "./components/create-lead/create-lead.component";
+import {CreateLeadComponentModule} from "./components/create-lead/create-lead.component-module";
+import {LeadsNavComponent} from "./components/leads-nav/leads-nav.component";
+import {LeadsNavComponentModule} from "./components/leads-nav/leads-nav.component-module";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -43,12 +47,15 @@ import {LogoutComponentModule} from "./components/logout/logout.component-module
       canActivate: [ HasBioGuard],
       data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login', hasBioUrl: '/auth/register'},
     },
-    {
-      path: 'leads',
-      component: LeadsTableComponent,
-      canActivate: [VerifyGuard],
-      data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
-    },
+    // {
+    //   path: 'leads',
+    //   component: LeadsTableComponent,
+    //
+    // },
+    // {
+    //   path: 'create-lead',
+    //   component: CreateLeadComponent
+    // },
     {
       path: 'verify',
       component: VerifyComponent
@@ -56,8 +63,26 @@ import {LogoutComponentModule} from "./components/logout/logout.component-module
     {
       path: 'logout',
       component: LogoutComponent
+    },
+    {
+      path: '',
+      component: LeadsNavComponent,
+      children: [
+        {
+          path: 'create-lead',
+          component: CreateLeadComponent,
+          loadChildren: () => CreateLeadComponentModule
+        },
+        {
+          path: 'leads',
+          component: LeadsTableComponent,
+          canActivate: [VerifyGuard],
+          data: {redirectUrl: '/verify', isLogin: false, loginUrl: '/auth/login'},
+          loadChildren: () => LeadsTableComponentModule
+        },
+      ]
     }
-  ]), AuthComponentModule, CompleteProfileComponentModule, VerifyComponentModule, LeadsTableComponentModule, LogoutComponentModule],
+  ]), AuthComponentModule, VerifyComponentModule, CompleteProfileComponentModule, LogoutComponentModule, LeadsNavComponentModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

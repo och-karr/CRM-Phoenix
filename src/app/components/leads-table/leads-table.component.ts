@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith} from 'rxjs';
+import {BehaviorSubject, combineLatest, map, Observable, shareReplay, startWith, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LeadsService } from '../../services/leads.service';
@@ -15,7 +15,9 @@ import {FormGroup} from "@angular/forms";
 export class LeadsTableComponent {
   constructor(private _userService: UserService, private _router: Router, private _leadsService: LeadsService) { }
 
-  readonly leads$: Observable<any> = this._leadsService.getLeads();
+  readonly leads$: Observable<any> = this._leadsService.getLeads().pipe(
+    tap(data => console.log(data))
+  );
   readonly activities$: Observable<any> = this._leadsService.getActivities();
 
   private _chosenActivitiesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
@@ -68,7 +70,7 @@ export class LeadsTableComponent {
           linkedinLink: lead.linkedinLink,
           websiteLink: lead.websiteLink
         },
-        scope: lead.activityIds.map((id: any) => activitiesMap[id].name),
+        scope: lead.activityIds.map((id: any) => activitiesMap[id]?.name),
         hiring: {
           isHiring: lead.hiring.active,
           juniors: lead.hiring.junior,
