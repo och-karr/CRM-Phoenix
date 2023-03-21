@@ -16,8 +16,6 @@ export class VerifyGuard implements CanActivate {
         if (token !== null) {
           return this._userService.verify().pipe(
             map(data => {
-              console.log('HERERER')
-              console.log(data.data.user.context.email_verified)
               return data.data.user.context.email_verified ?
                 true : this._router.parseUrl(activatedRoute.data['verifyUrl'])
             }),
@@ -28,7 +26,6 @@ export class VerifyGuard implements CanActivate {
         } else {
           return of(this._router.parseUrl(activatedRoute.data['loginUrl']))
           // if (activatedRoute.data['isLogin'] === true) {
-          //   console.log('NIEEEEE')
           //   return of(true);
           // } else {
           //   return of(this._router.parseUrl(activatedRoute.data['loginUrl']))

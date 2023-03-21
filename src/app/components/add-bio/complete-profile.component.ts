@@ -19,7 +19,7 @@ export class CompleteProfileComponent {
 
   logoutUser() {
     this._userService.logout();
-    window.location.reload();
+    this._router.navigate(['/auth/login']);
   }
 
   onFormSubmitted(form: FormGroup) {

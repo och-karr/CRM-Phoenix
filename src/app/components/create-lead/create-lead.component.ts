@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LeadsService } from '../../services/leads.service';
 import {atLeastOneSelected} from "../../../assets/js/validators/atLeastOneSelected";
+import {AuthModel} from "../../models/auth.model";
 
 @Component({
   selector: 'app-create-lead',
@@ -16,7 +17,7 @@ import {atLeastOneSelected} from "../../../assets/js/validators/atLeastOneSelect
 export class CreateLeadComponent {
   private allActivitiesIds: string[] = [];
 
-  readonly activities$: Observable<any> = this._leadsService.getActivities().pipe(
+  readonly activities$: Observable<AuthModel<any[]>> = this._leadsService.getActivities().pipe(
     tap((activities) => {
       this.createFormControlForCheckboxes(activities.data);
       this.allActivitiesIds = [];

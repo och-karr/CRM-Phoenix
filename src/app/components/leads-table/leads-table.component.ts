@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, map, shareReplay, startWith, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, shareReplay, startWith } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LeadsService } from '../../services/leads.service';
@@ -19,7 +19,6 @@ export class LeadsTableComponent {
   readonly userRole$: Observable<string | null> = this._roleService.get();
 
   readonly leads$: Observable<any> = this._leadsService.getLeads().pipe(
-    tap(data => console.log(data)),
     shareReplay(1)
   );
   readonly activities$: Observable<any> = this._leadsService.getActivities();
